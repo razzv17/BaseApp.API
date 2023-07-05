@@ -19,6 +19,15 @@ namespace BaseApp.API
             services.AddDbContext<BaseDbContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("BaseDbConnection")));
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
             services.AddControllers();
 
             services.AddSwaggerGen(c =>
@@ -33,6 +42,11 @@ namespace BaseApp.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/error");
+                app.UseHsts();
+            }
 
             app.UseSwagger();
 
@@ -44,6 +58,8 @@ namespace BaseApp.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
 
