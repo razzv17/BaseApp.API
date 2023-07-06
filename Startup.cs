@@ -22,7 +22,7 @@ namespace BaseApp.API
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
-                    builder => builder.WithOrigins("http://localhost:4200")
+                    builder => builder.WithOrigins("http://localhost:8080")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
@@ -55,7 +55,7 @@ namespace BaseApp.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "BaseApp.API v1");
             });
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
